@@ -66,7 +66,7 @@ async function recommendPokemon(searchTerm) {
 document.getElementById('searchBar').addEventListener('input', async (event) => {
     const searchTerm = event.target.value.trim();
     if (searchTerm) {
-        await recommendPokemon(capitalizeFirstLetter(searchTerm));
+        await recommendPokemon(searchTerm);
     } else {
         document.getElementById('pokemonList').innerHTML = '';
     }
@@ -79,9 +79,9 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
         const recommendations = pokemonListDiv.querySelectorAll('.pokemon');
         if (recommendations.length === 1) {
             const pokemonName = recommendations[0].getAttribute('data-name');
-            await displayPokemonData(capitalizeFirstLetter(pokemonName));
+            await displayPokemonData(pokemonName);
         } else if (searchTerm) {
-            await displayPokemonData(capitalizeFirstLetter(searchTerm));
+            await displayPokemonData(searchTerm);
         }
     }
 });
