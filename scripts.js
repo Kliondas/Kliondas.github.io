@@ -42,22 +42,26 @@ async function recommendPokemon(searchTerm) {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1000`);
         const data = await response.json();
         const filteredPokemon = data.results.filter(pokemon => 
-            pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+            pokemon.name.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
 
         const pokemonListDiv = document.getElementById('pokemonList');
-        pokemonListDiv.innerHTML = filteredPokemon.map(pokemon => `
-            <div class="pokemon" data-name="${pokemon.name}">
+        pokemonListDiv.innerHTML = '';
+
+        for (const pokemon of filteredPokemon) {
+            const pokemonData = await fetchPokemonData(pokemon.name);
+            const pokemonDiv = document.createElement('div');
+            pokemonDiv.classList.add('pokemon');
+            pokemonDiv.setAttribute('data-name', pokemon.name);
+            pokemonDiv.innerHTML = `
+                <img src="${pokemonData.sprites.front_default}" alt="${pokemon.name}">
                 <p>${capitalizeFirstLetter(pokemon.name)}</p>
-            </div>
-        `).join('');
-        
-        document.querySelectorAll('.pokemon').forEach(pokemonDiv => {
+            `;
             pokemonDiv.addEventListener('click', async () => {
-                const pokemonName = pokemonDiv.getAttribute('data-name');
-                await displayPokemonData(capitalizeFirstLetter(pokemonName));
+                await displayPokemonData(pokemon.name);
             });
-        });
+            pokemonListDiv.appendChild(pokemonDiv);
+        }
     } catch (error) {
         console.error(error);
     }
@@ -79,9 +83,9 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
         const recommendations = pokemonListDiv.querySelectorAll('.pokemon');
         if (recommendations.length === 1) {
             const pokemonName = recommendations[0].getAttribute('data-name');
-            await displayPokemonData(capitalizeFirstLetter(pokemonName));
+            await displayPokemonData(pokemonName);
         } else if (searchTerm) {
-            await displayPokemonData(capitalizeFirstLetter(searchTerm));
+            await displayPokemonData(searchTerm);
         }
     }
 });
