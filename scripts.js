@@ -85,7 +85,7 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
             const pokemonName = recommendations[0].getAttribute('data-name');
             await displayPokemonData(pokemonName);
         } else if (searchTerm) {
-            await displayPokemonData(searchTerm);
+            await recommendPokemon(searchTerm);
         }
     }
 });
