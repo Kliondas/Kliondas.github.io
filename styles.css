@@ -93,6 +93,40 @@ main {
     flex-direction: column;
 }
 
+.game-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.game-header {
+    font-weight: bold;
+    text-align: center;
+}
+
+.game {
+    display: contents;
+}
+
+.game label {
+    grid-column: 1;
+}
+
+.game input[type="checkbox"] {
+    grid-column: span 1;
+    justify-self: center;
+}
+
+@media (max-width: 600px) {
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game input[type="checkbox"] {
+        justify-self: start;
+    }
+}
+
 .game {
     display: flex;
     align-items: center;
