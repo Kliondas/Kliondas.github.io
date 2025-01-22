@@ -1,3 +1,7 @@
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 async function fetchPokemonData(pokemonName) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`);
     if (!response.ok) {
@@ -65,7 +69,7 @@ async function recommendPokemon(searchTerm) {
 document.getElementById('searchBar').addEventListener('input', async (event) => {
     const searchTerm = event.target.value.trim();
     if (searchTerm) {
-        await recommendPokemon(searchTerm);
+        await recommendPokemon(capitalizeFirstLetter(searchTerm));
     } else {
         document.getElementById('pokemonList').innerHTML = '';
     }
@@ -78,9 +82,9 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
         const recommendations = pokemonListDiv.querySelectorAll('.pokemon');
         if (recommendations.length === 1) {
             const pokemonName = recommendations[0].getAttribute('data-name');
-            await displayPokemonData(pokemonName);
+            await displayPokemonData(capitalizeFirstLetter(pokemonName));
         } else if (searchTerm) {
-            await displayPokemonData(searchTerm);
+            await displayPokemonData(capitalizeFirstLetter(searchTerm));
         }
     }
 });
