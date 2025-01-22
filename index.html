@@ -16,6 +16,7 @@
                 <li><a href="search.html">Suche</a></li>
                 <li><a href="guides.html">Guides</a></li>
                 <li><a href="news.html">News</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
             </ul>
         </nav>
     </header>
@@ -39,31 +40,21 @@
             <h2>Aktuelle News</h2>
             <!-- News Bereich -->
         </section>
-        <section id="calculator">
-            <h2>Shiny Hunting Calculator</h2>
-            <form id="calculatorForm">
-                <label for="game">Game:</label>
-                <input type="text" id="game" name="game" required>
-                
-                <label for="shinyCharm">Shiny Charm:</label>
-                <input type="checkbox" id="shinyCharm" name="shinyCharm">
-                
-                <label for="ovalCharm">Oval Charm:</label>
-                <input type="checkbox" id="ovalCharm" name="ovalCharm">
-                
-                <label for="target">Hunt Target:</label>
-                <input type="text" id="target" name="target" required>
-                
-                <label for="resets">Resets:</label>
-                <input type="number" id="resets" name="resets" value="0" required>
-                
-                <button type="button" id="calculateButton">Calculate</button>
-            </form>
-            <div id="results">
-                <p id="probability">Probability: </p>
-                <p id="resetsNeeded">Resets needed for 90% probability: </p>
+        <section id="gameSelection">
+            <h2>Wähle dein Spiel</h2>
+            <div id="games">
+                <!-- List of games with checkboxes for shiny and oval charm -->
+                <div class="game">
+                    <label for="goldSilver">Gold & Silver</label>
+                    <input type="checkbox" id="goldSilver" name="goldSilver">
+                    <label for="goldSilverShinyCharm">Shiny Charm</label>
+                    <input type="checkbox" id="goldSilverShinyCharm" name="goldSilverShinyCharm">
+                    <label for="goldSilverOvalCharm">Oval Charm</label>
+                    <input type="checkbox" id="goldSilverOvalCharm" name="goldSilverOvalCharm">
+                </div>
+                <!-- Add more games as needed -->
             </div>
-            <button id="incrementResets">Increment Resets</button>
+            <button id="recommendButton">Empfohlene Methode</button>
         </section>
     </main>
     <button style="border-radius: 10px; background-color: red;" onclick="alert('hi')">Click me</button>

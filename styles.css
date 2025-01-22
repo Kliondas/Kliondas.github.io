@@ -71,10 +71,38 @@ main {
     margin-top: 10px;
 }
 
+#calculatorForm select,
+#calculatorForm input {
+    margin-top: 5px;
+}
+
 #results {
     margin-top: 20px;
 }
 
 #incrementResets {
     margin-top: 10px;
+}
+
+#gameSelection {
+    margin-top: 20px;
+}
+
+#games {
+    display: flex;
+    flex-direction: column;
+}
+
+.game {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.game label {
+    margin-right: 10px;
+}
+
+#recommendButton {
+    margin-top: 20px;
 }

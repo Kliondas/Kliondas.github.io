@@ -92,6 +92,14 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
 
 document.getElementById('calculateButton').addEventListener('click', calculateProbability);
 document.getElementById('incrementResets').addEventListener('click', incrementResets);
+document.getElementById('recommendButton').addEventListener('click', recommendMethod);
+
+const shinyOdds = {
+    swordShield: 4096,
+    sunMoon: 4096,
+    xY: 4096,
+    // Add more games and their odds as needed
+};
 
 function calculateProbability() {
     const game = document.getElementById('game').value;
@@ -100,15 +108,28 @@ function calculateProbability() {
     const target = document.getElementById('target').value;
     const resets = parseInt(document.getElementById('resets').value, 10);
 
-    const probability = calculateShinyProbability(game, shinyCharm, ovalCharm, target, resets);
-    const resetsNeeded = calculateResetsFor90Percent(game, shinyCharm, ovalCharm, target);
+    const baseRate = 1 / shinyOdds[game];
+    const charmBonus = shinyCharm ? 2 : 1;
+    const probability = 1 - Math.pow(1 - (baseRate * charmBonus), resets);
+    const resetsNeeded = calculateResetsFor90Percent(baseRate, charmBonus);
 
     document.getElementById('probability').textContent = `Probability: ${probability.toFixed(2)}%`;
     document.getElementById('resetsNeeded').textContent = `Resets needed for 90% probability: ${resetsNeeded}`;
+}
+
+function calculateResetsFor90Percent(baseRate, charmBonus) {
+    const targetProbability = 0.9;
+    const resetsNeeded = Math.log(1 - targetProbability) / Math.log(1 - (baseRate * charmBonus));
+    return Math.ceil(resetsNeeded);
 }
 
 function incrementResets() {
     const resetsInput = document.getElementById('resets');
     resetsInput.value = parseInt(resetsInput.value, 10) + 1;
     calculateProbability();
+}
+
+function recommendMethod() {
+    // Logic to recommend the most effective shiny hunt method
+    alert('Empfohlene Methode wird hier angezeigt.');
 }

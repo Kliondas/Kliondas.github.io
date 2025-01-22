@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiny Hunting Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Shiny Hunting Calculator</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="search.html">Suche</a></li>
+                <li><a href="guides.html">Guides</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="calculator">
+            <h2>Shiny Hunting Calculator</h2>
+            <form id="calculatorForm">
+                <label for="game">Game:</label>
+                <select id="game" name="game" required>
+                    <option value="swordShield">Sword & Shield</option>
+                    <option value="sunMoon">Sun & Moon</option>
+                    <option value="xY">X & Y</option>
+                    <!-- Add more games as needed -->
+                </select>
+                
+                <label for="shinyCharm">Shiny Charm:</label>
+                <input type="checkbox" id="shinyCharm" name="shinyCharm">
+                
+                <label for="ovalCharm">Oval Charm:</label>
+                <input type="checkbox" id="ovalCharm" name="ovalCharm">
+                
+                <label for="target">Hunt Target:</label>
+                <input type="text" id="target" name="target" required>
+                
+                <label for="resets">Resets:</label>
+                <input type="number" id="resets" name="resets" value="0" required>
+                
+                <button type="button" id="calculateButton">Calculate</button>
+            </form>
+            <div id="results">
+                <p id="probability">Probability: </p>
+                <p id="resetsNeeded">Resets needed for 90% probability: </p>
+            </div>
+            <button id="incrementResets">Increment Resets</button>
+        </section>
+    </main>
+    <script src="scripts.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>
