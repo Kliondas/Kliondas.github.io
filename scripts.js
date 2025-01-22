@@ -55,7 +55,7 @@ async function recommendPokemon(searchTerm) {
         document.querySelectorAll('.pokemon').forEach(pokemonDiv => {
             pokemonDiv.addEventListener('click', async () => {
                 const pokemonName = pokemonDiv.getAttribute('data-name');
-                await displayPokemonData(pokemonName);
+                await displayPokemonData(capitalizeFirstLetter(pokemonName));
             });
         });
     } catch (error) {
@@ -79,9 +79,9 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
         const recommendations = pokemonListDiv.querySelectorAll('.pokemon');
         if (recommendations.length === 1) {
             const pokemonName = recommendations[0].getAttribute('data-name');
-            await displayPokemonData(pokemonName);
+            await displayPokemonData(capitalizeFirstLetter(pokemonName));
         } else if (searchTerm) {
-            await displayPokemonData(searchTerm);
+            await displayPokemonData(capitalizeFirstLetter(searchTerm));
         }
     }
 });
