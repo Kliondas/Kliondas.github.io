@@ -39,22 +39,19 @@ async function displayPokemonData(pokemonName) {
 
 async function recommendPokemon(searchTerm) {
     try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1000`);
         const data = await response.json();
-        const pokemonList = data.results;
-        const filteredPokemon = pokemonList.filter(pokemon => pokemon.name.startsWith(searchTerm.toLowerCase()));
-        const pokemonListDiv = document.getElementById('pokemonList');
-        pokemonListDiv.innerHTML = await Promise.all(filteredPokemon.map(async pokemon => {
-            const pokemonData = await fetchPokemonData(pokemon.name);
-            return `
-                <div class="pokemon" data-name="${pokemon.name}">
-                    <img src="${pokemonData.sprites.front_default}" alt="${pokemon.name}">
-                    <p>${pokemon.name}</p>
-                </div>
-            `;
-        })).then(results => results.join(''));
+        const filteredPokemon = data.results.filter(pokemon => 
+            pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
-        // Add click event listeners to recommendations
+        const pokemonListDiv = document.getElementById('pokemonList');
+        pokemonListDiv.innerHTML = filteredPokemon.map(pokemon => `
+            <div class="pokemon" data-name="${pokemon.name}">
+                <p>${capitalizeFirstLetter(pokemon.name)}</p>
+            </div>
+        `).join('');
+        
         document.querySelectorAll('.pokemon').forEach(pokemonDiv => {
             pokemonDiv.addEventListener('click', async () => {
                 const pokemonName = pokemonDiv.getAttribute('data-name');
