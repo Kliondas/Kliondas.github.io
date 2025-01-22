@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PWA Shiny Hunting</title>
+    <title>Suche - PWA Shiny Hunting</title>
     <link rel="manifest" href="/Manifest/manifest.webmanifest">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,10 +20,6 @@
         </nav>
     </header>
     <main>
-        <section id="home">
-            <h2>Willkommen bei Shiny Hunting</h2>
-            <p>Optimiert die Zeit der Nutzer beim Hunten...</p>
-        </section>
         <section id="search">
             <h2>Suche nach Pokémon</h2>
             <input type="text" id="searchBar" placeholder="Suche nach Pokémon...">
@@ -31,42 +27,7 @@
                 <!-- Pokémon Liste wird hier eingefügt -->
             </div>
         </section>
-        <section id="guides">
-            <h2>Shiny Hunting Guides</h2>
-            <!-- Guides und Methoden -->
-        </section>
-        <section id="news">
-            <h2>Aktuelle News</h2>
-            <!-- News Bereich -->
-        </section>
     </main>
-    <button style="border-radius: 10px; background-color: red;" onclick="alert('hi')">Click me</button>
-    <script>
-        if ('serviceWorker' in navigator)
-            {navigator.serviceWorker.register('./sw.js')
-            .then(reg =>console.log(reg))
-            .catch(err => console.log(err));
-            }
-    </script>
-    <button id="install" style="display: none;">Installieren</button>
-    <script>
-        const installButton = document.getElementById('install');
-        let deferredPrompt;
-
-        window.addEventListener('beforeinstallprompt', evt => {
-            event.preventDefault();
-            deferredPrompt = evt;
-            installButton.style.display = 'block';
-        });
-
-        installButton.addEventListener('click', async () => {
-            await deferredPrompt.prompt();
-            const choiceResult = await deferredPrompt.userChoice;
-            console.log(choiceResult.outcome);
-        });
-
-        navigator.serviceWorker.register('./sw.js');
-    </script>
     <script src="scripts.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
