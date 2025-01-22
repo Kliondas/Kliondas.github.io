@@ -1,0 +1,17 @@
+{
+    "name":"Shiny Hunting",
+    "short_name":"Shiny",
+    "icons": [{
+        "src": "shinyhisui.png",
+        "type": "image/png",
+        "sizes": "512x512"
+    }],
+    "background_color": "white",
+    "start_url": "/",
+    "display": "standalone",
+    "description":"Shiny Hunting PWA for Shiny Hunters",
+    "categories":"entertainment,games,utilities",
+    "orientation":"any",
+    "iarc_rating_id":"420"
+    
+}

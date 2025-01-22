@@ -1,7 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Shiny Hunting</title>
+    <link rel="manifest" href="/Manifest/manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header>
+        <h1>Shiny Hunting</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#search">Suche</a></li>
+                <li><a href="#guides">Guides</a></li>
+                <li><a href="#news">News</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home">
+            <h2>Willkommen bei Shiny Hunting</h2>
+            <p>Optimiert die Zeit der Nutzer beim Hunten...</p>
+        </section>
+        <section id="search">
+            <h2>Suche nach Pokémon</h2>
+            <input type="text" id="searchBar" placeholder="Suche nach Pokémon...">
+            <div id="pokemonList">
+                <!-- Pokémon Liste wird hier eingefügt -->
+            </div>
+        </section>
+        <section id="guides">
+            <h2>Shiny Hunting Guides</h2>
+            <!-- Guides und Methoden -->
+        </section>
+        <section id="news">
+            <h2>Aktuelle News</h2>
+            <!-- News Bereich -->
+        </section>
+    </main>
+    <button style="border-radius: 10px; background-color: red;" onclick="alert('hi')">Click me</button>
+    <script>
+        if ('serviceWorker' in navigator)
+            {navigator.serviceWorker.register('./sw.js')
+            .then(reg =>console.log(reg))
+            .catch(err => console.log(err));
+            }
+    </script>
+    <button id="install" style="display: none;">Installieren</button>
+    <script>
+        const installButton = document.getElementById('install');
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', evt => {
+            event.preventDefault();
+            deferredPrompt = evt;
+            installButton.style.display = 'block';
+        });
+
+        installButton.addEventListener('click', async () => {
+            await deferredPrompt.prompt();
+            const choiceResult = await deferredPrompt.userChoice;
+            console.log(choiceResult.outcome);
+        });
+
+        navigator.serviceWorker.register('./sw.js');
+    </script>
+    <script src="scripts.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registriert mit Scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker Registrierung fehlgeschlagen:', error);
+                    });
+            });
+        }
+    </script>
+    <footer>
+        <p>&copy; 2025 Shiny Hunting</p>
+    </footer>
 </body>
 </html>
