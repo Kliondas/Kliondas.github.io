@@ -57,3 +57,24 @@ main {
     width: 100px;
     height: 100px;
 }
+
+#calculator {
+    margin-top: 20px;
+}
+
+#calculatorForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#calculatorForm label {
+    margin-top: 10px;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+#incrementResets {
+    margin-top: 10px;
+}

@@ -89,3 +89,26 @@ document.getElementById('searchBar').addEventListener('keypress', async (event) 
         }
     }
 });
+
+document.getElementById('calculateButton').addEventListener('click', calculateProbability);
+document.getElementById('incrementResets').addEventListener('click', incrementResets);
+
+function calculateProbability() {
+    const game = document.getElementById('game').value;
+    const shinyCharm = document.getElementById('shinyCharm').checked;
+    const ovalCharm = document.getElementById('ovalCharm').checked;
+    const target = document.getElementById('target').value;
+    const resets = parseInt(document.getElementById('resets').value, 10);
+
+    const probability = calculateShinyProbability(game, shinyCharm, ovalCharm, target, resets);
+    const resetsNeeded = calculateResetsFor90Percent(game, shinyCharm, ovalCharm, target);
+
+    document.getElementById('probability').textContent = `Probability: ${probability.toFixed(2)}%`;
+    document.getElementById('resetsNeeded').textContent = `Resets needed for 90% probability: ${resetsNeeded}`;
+}
+
+function incrementResets() {
+    const resetsInput = document.getElementById('resets');
+    resetsInput.value = parseInt(resetsInput.value, 10) + 1;
+    calculateProbability();
+}
