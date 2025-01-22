@@ -28,7 +28,7 @@ async function displayPokemonData(pokemonName) {
         pokemonListDiv.innerHTML = `
             <div class="pokemon">
                 <img src="${data.sprites.front_default}" alt="${data.name}">
-                <p>${data.name}</p>
+                <p>${capitalizeFirstLetter(data.name)}</p>
             </div>
         `;
     } catch (error) {
