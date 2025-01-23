@@ -29,22 +29,41 @@ async function displayPokemonData(pokemonName) {
         const normalSprite = document.getElementById('normalSprite');
         const shinySprite = document.getElementById('shinySprite');
         
+        // Set normal sprite from PokeAPI
         normalSprite.src = data.sprites.front_default;
         
-        let spriteLoadAttempted = false;
-        shinySprite.onerror = () => {
-            if (!spriteLoadAttempted) {
-                spriteLoadAttempted = true;
-                shinySprite.src = '/assets/images/shiny-placeholder.png';
-            }
-        };
+        // Try multiple sprite sources for shiny
+        const shinySpriteSources = [
+            `https://img.pokemondb.net/sprites/home/shiny/${pokemonName.toLowerCase()}.png`,
+            `https://play.pokemonshowdown.com/sprites/gen5/shiny/${pokemonName.toLowerCase()}.png`,
+            `https://www.serebii.net/Shiny/${pokemonName.toLowerCase()}.png`
+        ];
+
+        let spriteLoaded = false;
         
-        shinySprite.src = `https://play.pokemonshowdown.com/sprites/gen5/shiny/${pokemonName.toLowerCase()}.png`;
+        // Try each source until one works
+        for (const source of shinySpriteSources) {
+            try {
+                const response = await fetch(source);
+                if (response.ok) {
+                    shinySprite.src = source;
+                    spriteLoaded = true;
+                    break;
+                }
+            } catch (error) {
+                continue;
+            }
+        }
+
+        // If no sprite source worked, use placeholder
+        if (!spriteLoaded) {
+            shinySprite.src = '/assets/images/shiny-placeholder.png';
+        }
         
         modalPokemonName.textContent = capitalizeFirstLetter(pokemonName);
         modal.style.display = "block";
         
-        // Close modal handlers...
+        // Close modal handlers
         document.querySelector('.close').onclick = () => {
             modal.style.display = "none";
         }
@@ -57,8 +76,11 @@ async function displayPokemonData(pokemonName) {
         
         updateHuntingMethod(pokemonName);
     } catch (error) {
-        console.error(error);
-        alert('Pokémon not found');
+        console.error('Error loading Pokemon data:', error);
+        // Show modal even if there's an error
+        const modal = document.getElementById('pokemonModal');
+        modal.style.display = "block";
+        document.getElementById('modalPokemonName').textContent = capitalizeFirstLetter(pokemonName);
     }
 }
 
