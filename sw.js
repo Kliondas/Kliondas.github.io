@@ -1,5 +1,6 @@
 const CACHE_NAME = 'shiny-hunting-cache-v2';
 const SPRITE_BASE_URL = 'https://play.pokemonshowdown.com/sprites/gen5/shiny/';
+const PLACEHOLDER_URL = '/assets/images/shiny-placeholder.png';
 
 const urlsToCache = [
     '/',
@@ -18,44 +19,33 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request).then(response => {
-            // Return cached response if found
-            if (response) {
-                return response;
-            }
-
-            // Clone the request because it can only be used once
-            const fetchRequest = event.request.clone();
-
-            // Try fetching from network
-            return fetch(fetchRequest).then(response => {
-                // Check if valid response
-                if (!response || response.status !== 200 || response.type !== 'basic') {
-                    return response;
-                }
-
-                // Clone the response because it can only be used once
-                const responseToCache = response.clone();
-
-                // Cache the fetched resource
-                caches.open(CACHE_NAME).then(cache => {
-                    // Only cache sprites and essential files
-                    if (event.request.url.includes(SPRITE_BASE_URL) || 
-                        urlsToCache.includes(event.request.url)) {
-                        cache.put(event.request, responseToCache);
+    if (event.request.url.includes(SPRITE_BASE_URL)) {
+        event.respondWith(
+            caches.match(event.request)
+                .then(cachedResponse => {
+                    if (cachedResponse) {
+                        return cachedResponse;
                     }
-                });
-
-                return response;
-            }).catch(() => {
-                // If sprite fetch fails, return placeholder
-                if (event.request.url.includes(SPRITE_BASE_URL)) {
-                    return caches.match('/assets/images/shiny-placeholder.png');
-                }
-            });
-        })
-    );
+                    return fetch(event.request.clone())
+                        .then(response => {
+                            if (!response || response.status !== 200) {
+                                return caches.match(PLACEHOLDER_URL);
+                            }
+                            caches.open(CACHE_NAME)
+                                .then(cache => {
+                                    cache.put(event.request, response.clone());
+                                });
+                            return response;
+                        })
+                        .catch(() => caches.match(PLACEHOLDER_URL));
+                })
+        );
+    } else {
+        event.respondWith(
+            caches.match(event.request)
+                .then(response => response || fetch(event.request))
+        );
+    }
 });
 
 // Clean up old caches

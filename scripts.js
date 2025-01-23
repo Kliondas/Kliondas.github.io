@@ -29,16 +29,16 @@ async function displayPokemonData(pokemonName) {
         const normalSprite = document.getElementById('normalSprite');
         const shinySprite = document.getElementById('shinySprite');
         
-        // Set normal sprite from PokeAPI
         normalSprite.src = data.sprites.front_default;
         
-        // Try loading shiny sprite with error handling
+        let spriteLoadAttempted = false;
         shinySprite.onerror = () => {
-            // Fallback to local sprites if available or show placeholder
-            shinySprite.src = 'assets/images/shiny-placeholder.png';
+            if (!spriteLoadAttempted) {
+                spriteLoadAttempted = true;
+                shinySprite.src = '/assets/images/shiny-placeholder.png';
+            }
         };
         
-        // Attempt to load from Pokemon Showdown
         shinySprite.src = `https://play.pokemonshowdown.com/sprites/gen5/shiny/${pokemonName.toLowerCase()}.png`;
         
         modalPokemonName.textContent = capitalizeFirstLetter(pokemonName);
@@ -223,4 +223,13 @@ function determineHuntingMethod(pokemonName, game, hasShinyCharm) {
             "3. Collect and hatch eggs"
         ]
     };
+}
+
+// Add this code at the end of scripts.js
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+            registration.unregister();
+        }
+    });
 }
