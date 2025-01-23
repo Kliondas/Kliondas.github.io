@@ -94,6 +94,24 @@ document.getElementById('calculateButton').addEventListener('click', calculatePr
 document.getElementById('incrementResets').addEventListener('click', incrementResets);
 document.getElementById('recommendButton').addEventListener('click', recommendMethod);
 
+document.getElementById('selectAllGames').addEventListener('click', () => {
+    document.querySelectorAll('.game input[type="checkbox"]:nth-child(2)').forEach(checkbox => {
+        checkbox.checked = true;
+    });
+});
+
+document.getElementById('selectAllShinyCharms').addEventListener('click', () => {
+    document.querySelectorAll('.game input[name$="ShinyCharm"]').forEach(checkbox => {
+        checkbox.checked = true;
+    });
+});
+
+document.getElementById('selectAllOvalCharms').addEventListener('click', () => {
+    document.querySelectorAll('.game input[name$="OvalCharm"]').forEach(checkbox => {
+        checkbox.checked = true;
+    });
+});
+
 const shinyOdds = {
     swordShield: 4096,
     sunMoon: 4096,
