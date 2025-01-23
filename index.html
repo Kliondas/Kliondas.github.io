@@ -306,14 +306,15 @@
     <script src="calculator.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('Service Worker registriert mit Scope:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Service Worker Registrierung fehlgeschlagen:', error);
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js', {
+                        scope: '/'
                     });
+                    console.log('ServiceWorker registration successful');
+                } catch (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                }
             });
         }
     </script>

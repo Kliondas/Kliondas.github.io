@@ -1,14 +1,14 @@
-const CACHE_NAME = 'shiny-hunting-cache-v2';
-const SPRITE_CACHE = 'sprite-cache-v1';
+const CACHE_NAME = 'shiny-hunting-cache-v3';
+const SPRITE_CACHE = 'sprite-cache-v2';
 const PLACEHOLDER_URL = '/assets/images/shiny-placeholder.png';
 
 // Basic assets to cache
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/scripts.js',
-    '/assets/images/shiny-placeholder.png'
+    './',
+    './index.html',
+    './styles.css',
+    './scripts.js',
+    './assets/images/shiny-placeholder.png'
 ];
 
 // Generate sprite URLs for all Pokemon (up to Gen 9)
@@ -41,35 +41,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Return cached response if found
                 if (response) {
                     return response;
                 }
-
-                // Clone the request
-                const fetchRequest = event.request.clone();
-
-                return fetch(fetchRequest).then(response => {
-                    // Check if valid response
-                    if (!response || response.status !== 200) {
-                        return response;
-                    }
-
-                    // Clone the response
-                    const responseToCache = response.clone();
-
-                    // Cache the fetched resource
-                    caches.open(CACHE_NAME).then(cache => {
-                        cache.put(event.request, responseToCache);
-                    });
-
-                    return response;
-                }).catch(() => {
-                    // Return placeholder for failed sprite loads
-                    if (event.request.url.includes('/sprites/')) {
-                        return caches.match('/assets/images/shiny-placeholder.png');
-                    }
-                });
+                return fetch(event.request);
             })
     );
 });
