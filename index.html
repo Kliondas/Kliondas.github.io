@@ -262,6 +262,19 @@
             </div>
         </section>
     </main>
+    <div id="pokemonModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalPokemonInfo">
+                <div class="pokemon-sprites">
+                    <img id="normalSprite" src="" alt="Normal form">
+                    <img id="shinySprite" src="" alt="Shiny form">
+                </div>
+                <h3 id="modalPokemonName"></h3>
+                <div id="huntingMethod"></div>
+            </div>
+        </div>
+    </div>
     <button style="border-radius: 10px; background-color: red;" onclick="alert('hi')">Click me</button>
     <script>
         if ('serviceWorker' in navigator)

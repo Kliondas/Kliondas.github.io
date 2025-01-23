@@ -24,13 +24,38 @@ function getStoredPokemonData(pokemonName) {
 async function displayPokemonData(pokemonName) {
     try {
         const data = await fetchPokemonData(pokemonName);
-        const pokemonListDiv = document.getElementById('pokemonList');
-        pokemonListDiv.innerHTML = `
-            <div class="pokemon">
-                <img src="${data.sprites.front_default}" alt="${data.name}">
-                <p>${capitalizeFirstLetter(data.name)}</p>
-            </div>
-        `;
+        const modal = document.getElementById('pokemonModal');
+        const modalPokemonName = document.getElementById('modalPokemonName');
+        const normalSprite = document.getElementById('normalSprite');
+        const shinySprite = document.getElementById('shinySprite');
+        
+        // Set normal sprite from PokeAPI
+        normalSprite.src = data.sprites.front_default;
+        
+        // Try loading shiny sprite with error handling
+        shinySprite.onerror = () => {
+            // Fallback to local sprites if available or show placeholder
+            shinySprite.src = 'assets/images/shiny-placeholder.png';
+        };
+        
+        // Attempt to load from Pokemon Showdown
+        shinySprite.src = `https://play.pokemonshowdown.com/sprites/gen5/shiny/${pokemonName.toLowerCase()}.png`;
+        
+        modalPokemonName.textContent = capitalizeFirstLetter(pokemonName);
+        modal.style.display = "block";
+        
+        // Close modal handlers...
+        document.querySelector('.close').onclick = () => {
+            modal.style.display = "none";
+        }
+        
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        updateHuntingMethod(pokemonName);
     } catch (error) {
         console.error(error);
         alert('Pokémon not found');
@@ -169,3 +194,33 @@ document.addEventListener('DOMContentLoaded', () => {
             .forEach(checkbox => checkbox.checked = true);
     });
 });
+
+function updateHuntingMethod(pokemonName) {
+    const selectedGame = document.querySelector('.game input[type="checkbox"]:checked');
+    const hasShinyCharm = document.querySelector(`input[name="${selectedGame.id}ShinyCharm"]`)?.checked;
+    const huntingMethodDiv = document.getElementById('huntingMethod');
+    
+    // Example hunting method logic - customize based on your needs
+    const method = determineHuntingMethod(pokemonName, selectedGame.id, hasShinyCharm);
+    
+    huntingMethodDiv.innerHTML = `
+        <h4>Best Hunting Method:</h4>
+        <p>${method.name}</p>
+        <p>Odds: 1/${method.odds}</p>
+        <p>Steps: ${method.steps.join(', ')}</p>
+    `;
+}
+
+function determineHuntingMethod(pokemonName, game, hasShinyCharm) {
+    // Add your logic to determine the best hunting method
+    // This is a simple example
+    return {
+        name: "Masuda Method",
+        odds: hasShinyCharm ? "512" : "683",
+        steps: [
+            "1. Get a foreign Ditto",
+            "2. Place it in the daycare with your target Pokémon",
+            "3. Collect and hatch eggs"
+        ]
+    };
+}

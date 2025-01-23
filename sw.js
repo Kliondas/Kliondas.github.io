@@ -1,4 +1,3 @@
-
 self.addEventListener('install', event => event.waitUntil(
     caches.open('shiny-hunting-cache-v1').then(cache => cache.add('/'))
 ));
@@ -9,7 +8,26 @@ self.addEventListener('fetch', event => event.respondWith(
         .then(response => response || fetch(event.request))
 ));
 
-const CACHE_NAME = 'shiny-hunting-cache-v1';
+const CACHE_NAME = 'shiny-sprites-cache-v1';
+const SPRITE_URLS = [
+    'https://play.pokemonshowdown.com/sprites/gen5/shiny/',
+    // Add more sprite URLs as needed
+];
+
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(SPRITE_URLS))
+    );
+});
+
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => response || fetch(event.request))
+    );
+});
+
 const urlsToCache = [
     '/',
     '/index.html',
