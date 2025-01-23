@@ -1,7 +1,8 @@
 const CACHE_NAME = 'shiny-hunting-cache-v2';
-const SPRITE_BASE_URL = 'https://play.pokemonshowdown.com/sprites/gen5/shiny/';
+const SPRITE_CACHE = 'sprite-cache-v1';
 const PLACEHOLDER_URL = '/assets/images/shiny-placeholder.png';
 
+// Basic assets to cache
 const urlsToCache = [
     '/',
     '/index.html',
@@ -10,42 +11,67 @@ const urlsToCache = [
     '/assets/images/shiny-placeholder.png'
 ];
 
+// Generate sprite URLs for all Pokemon (up to Gen 9)
+const generateSpriteUrls = () => {
+    const urls = [];
+    // Pokemon count up to Gen 9 (approx. 1008)
+    for (let i = 1; i <= 1008; i++) {
+        urls.push(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png`);
+        urls.push(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${i}.png`);
+    }
+    return urls;
+};
+
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll(urlsToCache);
-        })
+        Promise.all([
+            // Cache basic assets
+            caches.open(CACHE_NAME).then(cache => {
+                return cache.addAll(urlsToCache);
+            }),
+            // Cache all sprites
+            caches.open(SPRITE_CACHE).then(cache => {
+                return cache.addAll(generateSpriteUrls());
+            })
+        ])
     );
 });
 
 self.addEventListener('fetch', event => {
-    if (event.request.url.includes(SPRITE_BASE_URL)) {
-        event.respondWith(
-            caches.match(event.request)
-                .then(cachedResponse => {
-                    if (cachedResponse) {
-                        return cachedResponse;
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                // Return cached response if found
+                if (response) {
+                    return response;
+                }
+
+                // Clone the request
+                const fetchRequest = event.request.clone();
+
+                return fetch(fetchRequest).then(response => {
+                    // Check if valid response
+                    if (!response || response.status !== 200) {
+                        return response;
                     }
-                    return fetch(event.request.clone())
-                        .then(response => {
-                            if (!response || response.status !== 200) {
-                                return caches.match(PLACEHOLDER_URL);
-                            }
-                            caches.open(CACHE_NAME)
-                                .then(cache => {
-                                    cache.put(event.request, response.clone());
-                                });
-                            return response;
-                        })
-                        .catch(() => caches.match(PLACEHOLDER_URL));
-                })
-        );
-    } else {
-        event.respondWith(
-            caches.match(event.request)
-                .then(response => response || fetch(event.request))
-        );
-    }
+
+                    // Clone the response
+                    const responseToCache = response.clone();
+
+                    // Cache the fetched resource
+                    caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, responseToCache);
+                    });
+
+                    return response;
+                }).catch(() => {
+                    // Return placeholder for failed sprite loads
+                    if (event.request.url.includes('/sprites/')) {
+                        return caches.match('/assets/images/shiny-placeholder.png');
+                    }
+                });
+            })
+    );
 });
 
 // Clean up old caches
@@ -54,7 +80,7 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
+                    if (cacheName !== CACHE_NAME && cacheName !== SPRITE_CACHE) {
                         return caches.delete(cacheName);
                     }
                 })
