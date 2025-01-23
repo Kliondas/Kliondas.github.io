@@ -1,60 +1,78 @@
-self.addEventListener('install', event => event.waitUntil(
-    caches.open('shiny-hunting-cache-v1').then(cache => cache.add('/'))
-));
-
-self.addEventListener('fetch', event => event.respondWith(
-    caches.open('shiny-hunting-cache-v1')
-        .then(cache => cache.match(event.request))
-        .then(response => response || fetch(event.request))
-));
-
-const CACHE_NAME = 'shiny-sprites-cache-v1';
-const SPRITE_URLS = [
-    'https://play.pokemonshowdown.com/sprites/gen5/shiny/',
-    // Add more sprite URLs as needed
-];
-
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(SPRITE_URLS))
-    );
-});
-
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => response || fetch(event.request))
-    );
-});
+const CACHE_NAME = 'shiny-hunting-cache-v2';
+const SPRITE_BASE_URL = 'https://play.pokemonshowdown.com/sprites/gen5/shiny/';
 
 const urlsToCache = [
     '/',
     '/index.html',
     '/styles.css',
     '/scripts.js',
-    //zusätzliche cache möglichkeiten
+    '/assets/images/shiny-placeholder.png'
 ];
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                return cache.addAll(urlsToCache);
-            })
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.addAll(urlsToCache);
+        })
     );
 });
 
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
+        caches.match(event.request).then(response => {
+            // Return cached response if found
+            if (response) {
+                return response;
+            }
+
+            // Clone the request because it can only be used once
+            const fetchRequest = event.request.clone();
+
+            // Try fetching from network
+            return fetch(fetchRequest).then(response => {
+                // Check if valid response
+                if (!response || response.status !== 200 || response.type !== 'basic') {
+                    return response;
+                }
+
+                // Clone the response because it can only be used once
+                const responseToCache = response.clone();
+
+                // Cache the fetched resource
+                caches.open(CACHE_NAME).then(cache => {
+                    // Only cache sprites and essential files
+                    if (event.request.url.includes(SPRITE_BASE_URL) || 
+                        urlsToCache.includes(event.request.url)) {
+                        cache.put(event.request, responseToCache);
+                    }
+                });
+
+                return response;
+            }).catch(() => {
+                // If sprite fetch fails, return placeholder
+                if (event.request.url.includes(SPRITE_BASE_URL)) {
+                    return caches.match('/assets/images/shiny-placeholder.png');
+                }
+            });
+        })
     );
 });
 
-self.addEventListener('fetch', () => void 0);
+// Clean up old caches
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const pokemonList = [
         { name: 'Bulbasaur', image: 'bulbasaur.png' },
