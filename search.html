@@ -16,6 +16,7 @@
                 <li><a href="search.html">Suche</a></li>
                 <li><a href="guides.html">Guides</a></li>
                 <li><a href="news.html">News</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
             </ul>
         </nav>
     </header>
@@ -28,6 +29,21 @@
             </div>
         </section>
     </main>
+
+    <div id="pokemonModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalPokemonInfo">
+                <div class="pokemon-sprites">
+                    <img id="normalSprite" src="" alt="Normal form">
+                    <img id="shinySprite" src="" alt="Shiny form">
+                </div>
+                <h3 id="modalPokemonName"></h3>
+                <div id="huntingMethod"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="scripts.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
