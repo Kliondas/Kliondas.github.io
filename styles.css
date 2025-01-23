@@ -93,11 +93,33 @@ main {
     flex-direction: column;
 }
 
+.select-all-buttons {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.select-all-buttons button {
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
 .game-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
     align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.headers {
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f5f5f5;
 }
 
 .game-header {
@@ -107,9 +129,11 @@ main {
 
 .game {
     display: grid;
-    grid-template-columns: 150px auto auto auto;
-    gap: 10px;
+    grid-template-columns: 150px 1fr 1fr;
+    gap: 20px;
     align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .game label {
@@ -132,13 +156,21 @@ button {
 }
 
 .game {
-    display: flex;
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr;
+    gap: 20px;
     align-items: center;
-    margin-top: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .game label {
+    text-align: left;
     margin-right: 10px;
+}
+
+.game input[type="checkbox"] {
+    justify-self: center;
 }
 
 #recommendButton {

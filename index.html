@@ -42,219 +42,224 @@
         </section>
         <section id="gameSelection">
             <h2>Wähle dein Spiel</h2>
+            <div class="select-all-buttons">
+                <button id="selectAllGames">Select All Games</button>
+                <button id="selectAllShinyCharms">Select All Shiny Charms</button>
+                <button id="selectAllOvalCharms">Select All Oval Charms</button>
+            </div>
             <div id="games" class="game-grid">
-                <div class="game-header">Game</div>
-                <div class="game-header">Shiny Charm</div>
-                <div class="game-header">Oval Charm</div>
-                
-                <div class="game">
-                    <label for="gold">Gold</label>
-                    <input type="checkbox" id="gold" name="gold">
-                    <input type="checkbox" id="goldShinyCharm" name="goldShinyCharm">
-                    <input type="checkbox" id="goldOvalCharm" name="goldOvalCharm">
+                <div class="headers">
+                    <div class="game-header">Game</div>
+                    <div class="game-header">Shiny Charm</div>
+                    <div class="game-header">Oval Charm</div>
                 </div>
-                <div class="game">
-                    <label for="silver">Silver</label>
-                    <input type="checkbox" id="silver" name="silver">
-                    <input type="checkbox" id="silverShinyCharm" name="silverShinyCharm">
-                    <input type="checkbox" id="silverOvalCharm" name="silverOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="crystal">Crystal</label>
-                    <input type="checkbox" id="crystal" name="crystal">
-                    <input type="checkbox" id="crystalShinyCharm" name="crystalShinyCharm">
-                    <input type="checkbox" id="crystalOvalCharm" name="crystalOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="ruby">Ruby</label>
-                    <input type="checkbox" id="ruby" name="ruby">
-                    <input type="checkbox" id="rubyShinyCharm" name="rubyShinyCharm">
-                    <input type="checkbox" id="rubyOvalCharm" name="rubyOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="sapphire">Sapphire</label>
-                    <input type="checkbox" id="sapphire" name="sapphire">
-                    <input type="checkbox" id="sapphireShinyCharm" name="sapphireShinyCharm">
-                    <input type="checkbox" id="sapphireOvalCharm" name="sapphireOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="emerald">Emerald</label>
-                    <input type="checkbox" id="emerald" name="emerald">
-                    <input type="checkbox" id="emeraldShinyCharm" name="emeraldShinyCharm">
-                    <input type="checkbox" id="emeraldOvalCharm" name="emeraldOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="fireRed">FireRed</label>
-                    <input type="checkbox" id="fireRed" name="fireRed">
-                    <input type="checkbox" id="fireRedShinyCharm" name="fireRedShinyCharm">
-                    <input type="checkbox" id="fireRedOvalCharm" name="fireRedOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="leafGreen">LeafGreen</label>
-                    <input type="checkbox" id="leafGreen" name="leafGreen">
-                    <input type="checkbox" id="leafGreenShinyCharm" name="leafGreenShinyCharm">
-                    <input type="checkbox" id="leafGreenOvalCharm" name="leafGreenOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="diamond">Diamond</label>
-                    <input type="checkbox" id="diamond" name="diamond">
-                    <input type="checkbox" id="diamondShinyCharm" name="diamondShinyCharm">
-                    <input type="checkbox" id="diamondOvalCharm" name="diamondOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="pearl">Pearl</label>
-                    <input type="checkbox" id="pearl" name="pearl">
-                    <input type="checkbox" id="pearlShinyCharm" name="pearlShinyCharm">
-                    <input type="checkbox" id="pearlOvalCharm" name="pearlOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="platinum">Platinum</label>
-                    <input type="checkbox" id="platinum" name="platinum">
-                    <input type="checkbox" id="platinumShinyCharm" name="platinumShinyCharm">
-                    <input type="checkbox" id="platinumOvalCharm" name="platinumOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="heartGold">HeartGold</label>
-                    <input type="checkbox" id="heartGold" name="heartGold">
-                    <input type="checkbox" id="heartGoldShinyCharm" name="heartGoldShinyCharm">
-                    <input type="checkbox" id="heartGoldOvalCharm" name="heartGoldOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="soulSilver">SoulSilver</label>
-                    <input type="checkbox" id="soulSilver" name="soulSilver">
-                    <input type="checkbox" id="soulSilverShinyCharm" name="soulSilverShinyCharm">
-                    <input type="checkbox" id="soulSilverOvalCharm" name="soulSilverOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="black">Black</label>
-                    <input type="checkbox" id="black" name="black">
-                    <input type="checkbox" id="blackShinyCharm" name="blackShinyCharm">
-                    <input type="checkbox" id="blackOvalCharm" name="blackOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="white">White</label>
-                    <input type="checkbox" id="white" name="white">
-                    <input type="checkbox" id="whiteShinyCharm" name="whiteShinyCharm">
-                    <input type="checkbox" id="whiteOvalCharm" name="whiteOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="black2">Black 2</label>
-                    <input type="checkbox" id="black2" name="black2">
-                    <input type="checkbox" id="black2ShinyCharm" name="black2ShinyCharm">
-                    <input type="checkbox" id="black2OvalCharm" name="black2OvalCharm">
-                </div>
-                <div class="game">
-                    <label for="white2">White 2</label>
-                    <input type="checkbox" id="white2" name="white2">
-                    <input type="checkbox" id="white2ShinyCharm" name="white2ShinyCharm">
-                    <input type="checkbox" id="white2OvalCharm" name="white2OvalCharm">
-                </div>
-                <div class="game">
-                    <label for="x">X</label>
-                    <input type="checkbox" id="x" name="x">
-                    <input type="checkbox" id="xShinyCharm" name="xShinyCharm">
-                    <input type="checkbox" id="xOvalCharm" name="xOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="y">Y</label>
-                    <input type="checkbox" id="y" name="y">
-                    <input type="checkbox" id="yShinyCharm" name="yShinyCharm">
-                    <input type="checkbox" id="yOvalCharm" name="yOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="omegaRuby">Omega Ruby</label>
-                    <input type="checkbox" id="omegaRuby" name="omegaRuby">
-                    <input type="checkbox" id="omegaRubyShinyCharm" name="omegaRubyShinyCharm">
-                    <input type="checkbox" id="omegaRubyOvalCharm" name="omegaRubyOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="alphaSapphire">Alpha Sapphire</label>
-                    <input type="checkbox" id="alphaSapphire" name="alphaSapphire">
-                    <input type="checkbox" id="alphaSapphireShinyCharm" name="alphaSapphireShinyCharm">
-                    <input type="checkbox" id="alphaSapphireOvalCharm" name="alphaSapphireOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="sun">Sun</label>
-                    <input type="checkbox" id="sun" name="sun">
-                    <input type="checkbox" id="sunShinyCharm" name="sunShinyCharm">
-                    <input type="checkbox" id="sunOvalCharm" name="sunOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="moon">Moon</label>
-                    <input type="checkbox" id="moon" name="moon">
-                    <input type="checkbox" id="moonShinyCharm" name="moonShinyCharm">
-                    <input type="checkbox" id="moonOvalCharm" name="moonOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="ultraSun">Ultra Sun</label>
-                    <input type="checkbox" id="ultraSun" name="ultraSun">
-                    <input type="checkbox" id="ultraSunShinyCharm" name="ultraSunShinyCharm">
-                    <input type="checkbox" id="ultraSunOvalCharm" name="ultraSunOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="ultraMoon">Ultra Moon</label>
-                    <input type="checkbox" id="ultraMoon" name="ultraMoon">
-                    <input type="checkbox" id="ultraMoonShinyCharm" name="ultraMoonShinyCharm">
-                    <input type="checkbox" id="ultraMoonOvalCharm" name="ultraMoonOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="letsGoPikachu">Let's Go Pikachu</label>
-                    <input type="checkbox" id="letsGoPikachu" name="letsGoPikachu">
-                    <input type="checkbox" id="letsGoPikachuShinyCharm" name="letsGoPikachuShinyCharm">
-                    <input type="checkbox" id="letsGoPikachuOvalCharm" name="letsGoPikachuOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="letsGoEevee">Let's Go Eevee</label>
-                    <input type="checkbox" id="letsGoEevee" name="letsGoEevee">
-                    <input type="checkbox" id="letsGoEeveeShinyCharm" name="letsGoEeveeShinyCharm">
-                    <input type="checkbox" id="letsGoEeveeOvalCharm" name="letsGoEeveeOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="sword">Sword</label>
-                    <input type="checkbox" id="sword" name="sword">
-                    <input type="checkbox" id="swordShinyCharm" name="swordShinyCharm">
-                    <input type="checkbox" id="swordOvalCharm" name="swordOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="shield">Shield</label>
-                    <input type="checkbox" id="shield" name="shield">
-                    <input type="checkbox" id="shieldShinyCharm" name="shieldShinyCharm">
-                    <input type="checkbox" id="shieldOvalCharm" name="shieldOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="brilliantDiamond">Brilliant Diamond</label>
-                    <input type="checkbox" id="brilliantDiamond" name="brilliantDiamond">
-                    <input type="checkbox" id="brilliantDiamondShinyCharm" name="brilliantDiamondShinyCharm">
-                    <input type="checkbox" id="brilliantDiamondOvalCharm" name="brilliantDiamondOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="shiningPearl">Shining Pearl</label>
-                    <input type="checkbox" id="shiningPearl" name="shiningPearl">
-                    <input type="checkbox" id="shiningPearlShinyCharm" name="shiningPearlShinyCharm">
-                    <input type="checkbox" id="shiningPearlOvalCharm" name="shiningPearlOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="legendsArceus">Legends: Arceus</label>
-                    <input type="checkbox" id="legendsArceus" name="legendsArceus">
-                    <input type="checkbox" id="legendsArceusShinyCharm" name="legendsArceusShinyCharm">
-                    <input type="checkbox" id="legendsArceusOvalCharm" name="legendsArceusOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="scarlet">Scarlet</label>
-                    <input type="checkbox" id="scarlet" name="scarlet">
-                    <input type="checkbox" id="scarletShinyCharm" name="scarletShinyCharm">
-                    <input type="checkbox" id="scarletOvalCharm" name="scarletOvalCharm">
-                </div>
-                <div class="game">
-                    <label for="violet">Violet</label>
-                    <input type="checkbox" id="violet" name="violet">
-                    <input type="checkbox" id="violetShinyCharm" name="violetShinyCharm">
-                    <input type="checkbox" id="violetOvalCharm" name="violetOvalCharm">
+                <div class="game-list">
+                    <div class="game">
+                        <label for="gold">Gold</label>
+                        <input type="checkbox" id="gold" name="gold">
+                        <input type="checkbox" id="goldShinyCharm" name="goldShinyCharm">
+                        <input type="checkbox" id="goldOvalCharm" name="goldOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="silver">Silver</label>
+                        <input type="checkbox" id="silver" name="silver">
+                        <input type="checkbox" id="silverShinyCharm" name="silverShinyCharm">
+                        <input type="checkbox" id="silverOvalCharm" name="silverOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="crystal">Crystal</label>
+                        <input type="checkbox" id="crystal" name="crystal">
+                        <input type="checkbox" id="crystalShinyCharm" name="crystalShinyCharm">
+                        <input type="checkbox" id="crystalOvalCharm" name="crystalOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="ruby">Ruby</label>
+                        <input type="checkbox" id="ruby" name="ruby">
+                        <input type="checkbox" id="rubyShinyCharm" name="rubyShinyCharm">
+                        <input type="checkbox" id="rubyOvalCharm" name="rubyOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="sapphire">Sapphire</label>
+                        <input type="checkbox" id="sapphire" name="sapphire">
+                        <input type="checkbox" id="sapphireShinyCharm" name="sapphireShinyCharm">
+                        <input type="checkbox" id="sapphireOvalCharm" name="sapphireOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="emerald">Emerald</label>
+                        <input type="checkbox" id="emerald" name="emerald">
+                        <input type="checkbox" id="emeraldShinyCharm" name="emeraldShinyCharm">
+                        <input type="checkbox" id="emeraldOvalCharm" name="emeraldOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="fireRed">FireRed</label>
+                        <input type="checkbox" id="fireRed" name="fireRed">
+                        <input type="checkbox" id="fireRedShinyCharm" name="fireRedShinyCharm">
+                        <input type="checkbox" id="fireRedOvalCharm" name="fireRedOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="leafGreen">LeafGreen</label>
+                        <input type="checkbox" id="leafGreen" name="leafGreen">
+                        <input type="checkbox" id="leafGreenShinyCharm" name="leafGreenShinyCharm">
+                        <input type="checkbox" id="leafGreenOvalCharm" name="leafGreenOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="diamond">Diamond</label>
+                        <input type="checkbox" id="diamond" name="diamond">
+                        <input type="checkbox" id="diamondShinyCharm" name="diamondShinyCharm">
+                        <input type="checkbox" id="diamondOvalCharm" name="diamondOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="pearl">Pearl</label>
+                        <input type="checkbox" id="pearl" name="pearl">
+                        <input type="checkbox" id="pearlShinyCharm" name="pearlShinyCharm">
+                        <input type="checkbox" id="pearlOvalCharm" name="pearlOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="platinum">Platinum</label>
+                        <input type="checkbox" id="platinum" name="platinum">
+                        <input type="checkbox" id="platinumShinyCharm" name="platinumShinyCharm">
+                        <input type="checkbox" id="platinumOvalCharm" name="platinumOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="heartGold">HeartGold</label>
+                        <input type="checkbox" id="heartGold" name="heartGold">
+                        <input type="checkbox" id="heartGoldShinyCharm" name="heartGoldShinyCharm">
+                        <input type="checkbox" id="heartGoldOvalCharm" name="heartGoldOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="soulSilver">SoulSilver</label>
+                        <input type="checkbox" id="soulSilver" name="soulSilver">
+                        <input type="checkbox" id="soulSilverShinyCharm" name="soulSilverShinyCharm">
+                        <input type="checkbox" id="soulSilverOvalCharm" name="soulSilverOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="black">Black</label>
+                        <input type="checkbox" id="black" name="black">
+                        <input type="checkbox" id="blackShinyCharm" name="blackShinyCharm">
+                        <input type="checkbox" id="blackOvalCharm" name="blackOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="white">White</label>
+                        <input type="checkbox" id="white" name="white">
+                        <input type="checkbox" id="whiteShinyCharm" name="whiteShinyCharm">
+                        <input type="checkbox" id="whiteOvalCharm" name="whiteOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="black2">Black 2</label>
+                        <input type="checkbox" id="black2" name="black2">
+                        <input type="checkbox" id="black2ShinyCharm" name="black2ShinyCharm">
+                        <input type="checkbox" id="black2OvalCharm" name="black2OvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="white2">White 2</label>
+                        <input type="checkbox" id="white2" name="white2">
+                        <input type="checkbox" id="white2ShinyCharm" name="white2ShinyCharm">
+                        <input type="checkbox" id="white2OvalCharm" name="white2OvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="x">X</label>
+                        <input type="checkbox" id="x" name="x">
+                        <input type="checkbox" id="xShinyCharm" name="xShinyCharm">
+                        <input type="checkbox" id="xOvalCharm" name="xOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="y">Y</label>
+                        <input type="checkbox" id="y" name="y">
+                        <input type="checkbox" id="yShinyCharm" name="yShinyCharm">
+                        <input type="checkbox" id="yOvalCharm" name="yOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="omegaRuby">Omega Ruby</label>
+                        <input type="checkbox" id="omegaRuby" name="omegaRuby">
+                        <input type="checkbox" id="omegaRubyShinyCharm" name="omegaRubyShinyCharm">
+                        <input type="checkbox" id="omegaRubyOvalCharm" name="omegaRubyOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="alphaSapphire">Alpha Sapphire</label>
+                        <input type="checkbox" id="alphaSapphire" name="alphaSapphire">
+                        <input type="checkbox" id="alphaSapphireShinyCharm" name="alphaSapphireShinyCharm">
+                        <input type="checkbox" id="alphaSapphireOvalCharm" name="alphaSapphireOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="sun">Sun</label>
+                        <input type="checkbox" id="sun" name="sun">
+                        <input type="checkbox" id="sunShinyCharm" name="sunShinyCharm">
+                        <input type="checkbox" id="sunOvalCharm" name="sunOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="moon">Moon</label>
+                        <input type="checkbox" id="moon" name="moon">
+                        <input type="checkbox" id="moonShinyCharm" name="moonShinyCharm">
+                        <input type="checkbox" id="moonOvalCharm" name="moonOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="ultraSun">Ultra Sun</label>
+                        <input type="checkbox" id="ultraSun" name="ultraSun">
+                        <input type="checkbox" id="ultraSunShinyCharm" name="ultraSunShinyCharm">
+                        <input type="checkbox" id="ultraSunOvalCharm" name="ultraSunOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="ultraMoon">Ultra Moon</label>
+                        <input type="checkbox" id="ultraMoon" name="ultraMoon">
+                        <input type="checkbox" id="ultraMoonShinyCharm" name="ultraMoonShinyCharm">
+                        <input type="checkbox" id="ultraMoonOvalCharm" name="ultraMoonOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="letsGoPikachu">Let's Go Pikachu</label>
+                        <input type="checkbox" id="letsGoPikachu" name="letsGoPikachu">
+                        <input type="checkbox" id="letsGoPikachuShinyCharm" name="letsGoPikachuShinyCharm">
+                        <input type="checkbox" id="letsGoPikachuOvalCharm" name="letsGoPikachuOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="letsGoEevee">Let's Go Eevee</label>
+                        <input type="checkbox" id="letsGoEevee" name="letsGoEevee">
+                        <input type="checkbox" id="letsGoEeveeShinyCharm" name="letsGoEeveeShinyCharm">
+                        <input type="checkbox" id="letsGoEeveeOvalCharm" name="letsGoEeveeOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="sword">Sword</label>
+                        <input type="checkbox" id="sword" name="sword">
+                        <input type="checkbox" id="swordShinyCharm" name="swordShinyCharm">
+                        <input type="checkbox" id="swordOvalCharm" name="swordOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="shield">Shield</label>
+                        <input type="checkbox" id="shield" name="shield">
+                        <input type="checkbox" id="shieldShinyCharm" name="shieldShinyCharm">
+                        <input type="checkbox" id="shieldOvalCharm" name="shieldOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="brilliantDiamond">Brilliant Diamond</label>
+                        <input type="checkbox" id="brilliantDiamond" name="brilliantDiamond">
+                        <input type="checkbox" id="brilliantDiamondShinyCharm" name="brilliantDiamondShinyCharm">
+                        <input type="checkbox" id="brilliantDiamondOvalCharm" name="brilliantDiamondOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="shiningPearl">Shining Pearl</label>
+                        <input type="checkbox" id="shiningPearl" name="shiningPearl">
+                        <input type="checkbox" id="shiningPearlShinyCharm" name="shiningPearlShinyCharm">
+                        <input type="checkbox" id="shiningPearlOvalCharm" name="shiningPearlOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="legendsArceus">Legends: Arceus</label>
+                        <input type="checkbox" id="legendsArceus" name="legendsArceus">
+                        <input type="checkbox" id="legendsArceusShinyCharm" name="legendsArceusShinyCharm">
+                        <input type="checkbox" id="legendsArceusOvalCharm" name="legendsArceusOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="scarlet">Scarlet</label>
+                        <input type="checkbox" id="scarlet" name="scarlet">
+                        <input type="checkbox" id="scarletShinyCharm" name="scarletShinyCharm">
+                        <input type="checkbox" id="scarletOvalCharm" name="scarletOvalCharm">
+                    </div>
+                    <div class="game">
+                        <label for="violet">Violet</label>
+                        <input type="checkbox" id="violet" name="violet">
+                        <input type="checkbox" id="violetShinyCharm" name="violetShinyCharm">
+                        <input type="checkbox" id="violetOvalCharm" name="violetOvalCharm">
+                    </div>
                 </div>
             </div>
-            <button id="selectAllGames">Select All Games</button>
-            <button id="selectAllShinyCharms">Select All Shiny Charms</button>
-            <button id="selectAllOvalCharms">Select All Oval Charms</button>
         </section>
     </main>
     <button style="border-radius: 10px; background-color: red;" onclick="alert('hi')">Click me</button>

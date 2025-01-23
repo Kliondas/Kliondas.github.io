@@ -151,3 +151,21 @@ function recommendMethod() {
     // Logic to recommend the most effective shiny hunt method
     alert('Empfohlene Methode wird hier angezeigt.');
 }
+
+// Add this at the end of your existing script.js file
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('selectAllGames')?.addEventListener('click', () => {
+        document.querySelectorAll('.game input[name]:not([name$="ShinyCharm"]):not([name$="OvalCharm"])')
+            .forEach(checkbox => checkbox.checked = true);
+    });
+
+    document.getElementById('selectAllShinyCharms')?.addEventListener('click', () => {
+        document.querySelectorAll('.game input[name$="ShinyCharm"]')
+            .forEach(checkbox => checkbox.checked = true);
+    });
+
+    document.getElementById('selectAllOvalCharms')?.addEventListener('click', () => {
+        document.querySelectorAll('.game input[name$="OvalCharm"]')
+            .forEach(checkbox => checkbox.checked = true);
+    });
+});
