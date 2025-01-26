@@ -228,3 +228,44 @@ if ('serviceWorker' in navigator) {
         }
     });
 }
+
+// Add to existing code
+async function searchPokemon(searchTerm) {
+    try {
+        const cache = await caches.open('pokemon-data-cache-v1');
+        const listResponse = await cache.match('pokemonList');
+        const pokemonList = await listResponse.json();
+        
+        const filteredPokemon = pokemonList.filter(pokemon => 
+            pokemon.name.includes(searchTerm.toLowerCase())
+        );
+
+        const pokemonData = await Promise.all(
+            filteredPokemon.map(async pokemon => {
+                const cachedResponse = await cache.match(`pokemon-${pokemon.name}`);
+                return cachedResponse.json();
+            })
+        );
+
+        displayPokemonResults(pokemonData);
+    } catch (error) {
+        console.error('Search failed:', error);
+        // Fallback to API if cache fails
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+        const data = await response.json();
+        displayPokemonResults([data]);
+    }
+}
+
+// Debounce search input
+const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), wait);
+    };
+};
+
+document.getElementById('searchBar').addEventListener('input', 
+    debounce(e => searchPokemon(e.target.value), 300)
+);

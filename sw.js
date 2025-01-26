@@ -1,5 +1,6 @@
 const CACHE_NAME = 'shiny-hunting-cache-v3';
-const SPRITE_CACHE = 'sprite-cache-v2';
+const POKEMON_CACHE = 'pokemon-data-cache-v1';
+const SPRITE_CACHE = 'pokemon-sprite-cache-v1';
 const PLACEHOLDER_URL = '/assets/images/shiny-placeholder.png';
 
 // Basic assets to cache
@@ -22,30 +23,77 @@ const generateSpriteUrls = () => {
     return urls;
 };
 
+// Cache Pokemon data on install
 self.addEventListener('install', event => {
     event.waitUntil(
         Promise.all([
-            // Cache basic assets
-            caches.open(CACHE_NAME).then(cache => {
-                return cache.addAll(urlsToCache);
-            }),
-            // Cache all sprites
-            caches.open(SPRITE_CACHE).then(cache => {
-                return cache.addAll(generateSpriteUrls());
-            })
+            caches.open(CACHE_NAME),
+            caches.open(POKEMON_CACHE),
+            caches.open(SPRITE_CACHE),
+            initPokemonCache()
         ])
     );
 });
 
+// Initialize Pokemon cache
+async function initPokemonCache() {
+    try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1008');
+        const data = await response.json();
+        
+        const pokemonCache = await caches.open(POKEMON_CACHE);
+        const spriteCache = await caches.open(SPRITE_CACHE);
+        
+        // Cache basic Pokemon list
+        await pokemonCache.put(
+            'pokemonList',
+            new Response(JSON.stringify(data.results))
+        );
+
+        // Cache individual Pokemon data in chunks
+        const chunkSize = 50;
+        for (let i = 0; i < data.results.length; i += chunkSize) {
+            const chunk = data.results.slice(i, i + chunkSize);
+            await Promise.all(chunk.map(async pokemon => {
+                try {
+                    // Cache Pokemon data
+                    const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+                    const pokemonData = await pokemonResponse.json();
+                    await pokemonCache.put(
+                        `pokemon-${pokemon.name}`,
+                        new Response(JSON.stringify(pokemonData))
+                    );
+
+                    // Cache sprites
+                    await spriteCache.put(
+                        pokemonData.sprites.front_default,
+                        await fetch(pokemonData.sprites.front_default)
+                    );
+                    if (pokemonData.sprites.front_shiny) {
+                        await spriteCache.put(
+                            pokemonData.sprites.front_shiny,
+                            await fetch(pokemonData.sprites.front_shiny)
+                        );
+                    }
+                } catch (error) {
+                    console.error(`Failed to cache ${pokemon.name}:`, error);
+                }
+            }));
+        }
+    } catch (error) {
+        console.error('Failed to initialize Pokemon cache:', error);
+    }
+}
+
+// Update fetch handler
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
-            })
+        caches.match(event.request).then(response => {
+            if (response) {
+                return response;
+            }
+            return fetch(event.request);
+        })
     );
 });
 
@@ -55,7 +103,7 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME && cacheName !== SPRITE_CACHE) {
+                    if (cacheName !== CACHE_NAME && cacheName !== SPRITE_CACHE && cacheName !== POKEMON_CACHE) {
                         return caches.delete(cacheName);
                     }
                 })
