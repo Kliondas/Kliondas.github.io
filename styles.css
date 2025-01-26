@@ -33,30 +33,49 @@ main {
 
 #searchBar {
     width: 100%;
+    max-width: 400px;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 20px auto;
+    display: block;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+#searchBar:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
 #pokemonList {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-    padding: 15px;
+    gap: 20px;
+    padding: 20px;
 }
 
 .pokemon {
-    width: 150px;
+    width: 200px;
     margin: 10px;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
     background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.pokemon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .pokemon img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    image-rendering: pixelated;
 }
 
 #calculator {
@@ -253,12 +272,12 @@ button {
 
 /* Error Message */
 .error-message {
+    grid-column: 1 / -1;
+    text-align: center;
     padding: 15px;
     background-color: #ffe6e6;
-    border: 1px solid #ffb3b3;
-    border-radius: 4px;
+    border-radius: 8px;
     color: #cc0000;
-    margin: 10px 0;
 }
 
 /* Selection Feedback */
@@ -377,6 +396,7 @@ button:active {
 }
 
 .loading {
+    grid-column: 1 / -1;
     text-align: center;
     padding: 20px;
     color: #666;
