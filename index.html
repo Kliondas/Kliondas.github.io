@@ -43,9 +43,9 @@
         <section id="gameSelection">
             <h2>Wähle dein Spiel</h2>
             <div class="select-all-buttons">
-                <button id="selectAllGames">Select All Games</button>
-                <button id="selectAllShinyCharms">Select All Shiny Charms</button>
-                <button id="selectAllOvalCharms">Select All Oval Charms</button>
+                <button id="selectAllGames" class="selection-button">Select All Games</button>
+                <button id="selectAllShinyCharms" class="selection-button">Select All Shiny Charms</button>
+                <button id="selectAllOvalCharms" class="selection-button">Select All Oval Charms</button>
             </div>
             <div id="games" class="game-grid">
                 <div class="headers">
@@ -299,11 +299,10 @@
             const choiceResult = await deferredPrompt.userChoice;
             console.log(choiceResult.outcome);
         });
-
-        navigator.serviceWorker.register('./sw.js');
     </script>
     <script src="scripts.js"></script>
     <script src="calculator.js"></script>
+    <!-- Remove duplicate service worker registrations -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
@@ -317,6 +316,14 @@
                 }
             });
         }
+    </script>
+    <script>
+        document.querySelectorAll('.selection-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.add('active');
+                setTimeout(() => this.classList.remove('active'), 200);
+            });
+        });
     </script>
     <footer>
         <p>&copy; 2025 Shiny Hunting</p>

@@ -21,63 +21,39 @@ function getStoredPokemonData(pokemonName) {
     return data ? JSON.parse(data) : null;
 }
 
+// Add loading state and error handling 
+let isLoading = false;
+
 async function displayPokemonData(pokemonName) {
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loading-spinner';
+    loadingDiv.textContent = 'Loading...';
+    
+    const pokemonList = document.getElementById('pokemonList');
+    pokemonList.innerHTML = '';
+    pokemonList.appendChild(loadingDiv);
+    
     try {
+        isLoading = true;
         const data = await fetchPokemonData(pokemonName);
-        const modal = document.getElementById('pokemonModal');
-        const modalPokemonName = document.getElementById('modalPokemonName');
-        const normalSprite = document.getElementById('normalSprite');
-        const shinySprite = document.getElementById('shinySprite');
         
-        // Set normal sprite from PokeAPI
-        normalSprite.src = data.sprites.front_default;
+        if (!data) throw new Error('Pokemon not found');
         
-        // Try alternative shiny sprite sources
-        const shinySpriteSources = [
-            `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${data.id}.png`,
-            `https://play.pokemonshowdown.com/sprites/gen5/shiny/${pokemonName.toLowerCase()}.png`
-        ];
-
-        let spriteLoaded = false;
-        
-        for (const source of shinySpriteSources) {
-            try {
-                const response = await fetch(source);
-                if (response.ok) {
-                    shinySprite.src = source;
-                    spriteLoaded = true;
-                    break;
-                }
-            } catch (error) {
-                continue;
-            }
-        }
-
-        if (!spriteLoaded) {
-            shinySprite.src = '/assets/images/shiny-placeholder.png';
-        }
-        
-        modalPokemonName.textContent = capitalizeFirstLetter(pokemonName);
-        modal.style.display = "block";
-        
-        // Close modal handlers
-        document.querySelector('.close').onclick = () => {
-            modal.style.display = "none";
-        }
-        
-        window.onclick = (event) => {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-        
-        updateHuntingMethod(pokemonName);
+        pokemonList.innerHTML = `
+            <div class="pokemon">
+                <h3>${capitalizeFirstLetter(data.name)}</h3>
+                <img src="${data.sprites.front_default}" alt="${data.name}">
+                <img src="${data.sprites.front_shiny}" alt="${data.name} shiny">
+            </div>
+        `;
     } catch (error) {
-        console.error('Error loading Pokemon data:', error);
-        const modal = document.getElementById('pokemonModal');
-        const modalPokemonName = document.getElementById('modalPokemonName');
-        modalPokemonName.textContent = capitalizeFirstLetter(pokemonName);
-        modal.style.display = "block";
+        pokemonList.innerHTML = `
+            <div class="error-message">
+                Pokemon "${pokemonName}" not found. Please try again.
+            </div>
+        `;
+    } finally {
+        isLoading = false;
     }
 }
 
