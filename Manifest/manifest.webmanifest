@@ -1,17 +1,23 @@
 {
-    "name":"Shiny Hunting",
-    "short_name":"Shiny",
-    "icons": [{
-        "src": "shinyhisui.png",
-        "type": "image/png",
-        "sizes": "512x512"
-    }],
-    "background_color": "white",
-    "start_url": "/",
-    "display": "standalone",
-    "description":"Shiny Hunting PWA for Shiny Hunters",
-    "categories":"entertainment,games,utilities",
-    "orientation":"any",
-    "iarc_rating_id":"420"
-    
+  "name": "Shiny Hunting",
+  "short_name": "Shiny Hunt",
+  "description": "A PWA for Shiny Hunting in Pokemon Games",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["games", "utilities"],
+  "orientation": "any"
 }
