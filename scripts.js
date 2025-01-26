@@ -230,32 +230,70 @@ if ('serviceWorker' in navigator) {
 }
 
 // Add to existing code
-async function searchPokemon(searchTerm) {
-    try {
-        const cache = await caches.open('pokemon-data-cache-v1');
-        const listResponse = await cache.match('pokemonList');
-        const pokemonList = await listResponse.json();
-        
-        const filteredPokemon = pokemonList.filter(pokemon => 
-            pokemon.name.includes(searchTerm.toLowerCase())
-        );
+let pokemonCache = new Map();
 
-        const pokemonData = await Promise.all(
+async function searchPokemon(searchTerm) {
+    const searchResults = document.getElementById('pokemonList');
+    searchResults.innerHTML = '<div class="loading">Searching...</div>';
+    
+    try {
+        if (!pokemonCache.size) {
+            const cache = await caches.open(POKEMON_CACHE);
+            const response = await cache.match('pokemonList');
+            if (response) {
+                const data = await response.json();
+                data.forEach(pokemon => pokemonCache.set(pokemon.name, pokemon));
+            }
+        }
+
+        const filteredPokemon = Array.from(pokemonCache.values())
+            .filter(pokemon => pokemon.name.includes(searchTerm.toLowerCase()))
+            .slice(0, 10);
+
+        if (filteredPokemon.length === 0) {
+            searchResults.innerHTML = '<div class="no-results">No Pokemon found</div>';
+            return;
+        }
+
+        const detailedResults = await Promise.all(
             filteredPokemon.map(async pokemon => {
-                const cachedResponse = await cache.match(`pokemon-${pokemon.name}`);
-                return cachedResponse.json();
+                try {
+                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+                    return response.json();
+                } catch (error) {
+                    console.error(`Failed to fetch ${pokemon.name}:`, error);
+                    return null;
+                }
             })
         );
 
-        displayPokemonResults(pokemonData);
+        displayPokemonResults(detailedResults.filter(Boolean));
     } catch (error) {
         console.error('Search failed:', error);
-        // Fallback to API if cache fails
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
-        const data = await response.json();
-        displayPokemonResults([data]);
+        searchResults.innerHTML = '<div class="error">Search failed. Please try again.</div>';
     }
 }
+
+function displayPokemonResults(pokemonData) {
+    const searchResults = document.getElementById('pokemonList');
+    searchResults.innerHTML = pokemonData
+        .map(pokemon => `
+            <div class="pokemon-card">
+                <h3>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h3>
+                <div class="sprite-container">
+                    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" loading="lazy">
+                    <img src="${pokemon.sprites.front_shiny}" alt="${pokemon.name} shiny" loading="lazy">
+                </div>
+            </div>
+        `)
+        .join('');
+}
+
+const debouncedSearch = debounce(searchTerm => searchPokemon(searchTerm), 300);
+
+document.getElementById('searchBar')?.addEventListener('input', event => {
+    debouncedSearch(event.target.value.trim());
+});
 
 // Debounce search input
 const debounce = (func, wait) => {
@@ -265,7 +303,3 @@ const debounce = (func, wait) => {
         timeout = setTimeout(() => func(...args), wait);
     };
 };
-
-document.getElementById('searchBar').addEventListener('input', 
-    debounce(e => searchPokemon(e.target.value), 300)
-);
