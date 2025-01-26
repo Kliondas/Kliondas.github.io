@@ -23,36 +23,81 @@
         <section id="calculator">
             <h2>Shiny Hunting Calculator</h2>
             <form id="calculatorForm">
-                <label for="game">Game:</label>
-                <select id="game" name="game" required>
-                    <option value="swordShield">Sword & Shield</option>
-                    <option value="sunMoon">Sun & Moon</option>
-                    <option value="xY">X & Y</option>
-                    <!-- Add more games as needed -->
-                </select>
+                <div class="form-group">
+                    <label for="game">Game:</label>
+                    <select id="game" name="game" required>
+                        <option value="">Select a game...</option>
+                        <option value="goldSilver">Gold/Silver (1/8192)</option>
+                        <option value="crystal">Crystal (1/8192)</option>
+                        <option value="rubySapphire">Ruby/Sapphire (1/8192)</option>
+                        <option value="emerald">Emerald (1/8192)</option>
+                        <option value="fireRedLeafGreen">FireRed/LeafGreen (1/8192)</option>
+                        <option value="diamondPearl">Diamond/Pearl (1/8192)</option>
+                        <option value="platinum">Platinum (1/8192)</option>
+                        <option value="heartGoldSoulSilver">HeartGold/SoulSilver (1/8192)</option>
+                        <option value="blackWhite">Black/White (1/8192)</option>
+                        <option value="black2White2">Black 2/White 2 (1/8192)</option>
+                        <option value="xY">X/Y (1/4096)</option>
+                        <option value="orasAlpha">ORAS (1/4096)</option>
+                        <option value="sunMoon">Sun/Moon (1/4096)</option>
+                        <option value="ultraSunMoon">Ultra Sun/Moon (1/4096)</option>
+                        <option value="letsGo">Let's Go Pikachu/Eevee (1/4096)</option>
+                        <option value="swordShield">Sword/Shield (1/4096)</option>
+                        <option value="bdsp">Brilliant Diamond/Shining Pearl (1/4096)</option>
+                        <option value="arceus">Legends: Arceus (1/4096)</option>
+                        <option value="scarletViolet">Scarlet/Violet (1/4096)</option>
+                    </select>
+                </div>
                 
-                <label for="shinyCharm">Shiny Charm:</label>
-                <input type="checkbox" id="shinyCharm" name="shinyCharm">
+                <div class="form-group">
+                    <label for="method">Hunting Method:</label>
+                    <select id="method" name="method" required>
+                        <option value="random">Random Encounter</option>
+                        <option value="masuda">Masuda Method</option>
+                        <option value="chain">Chain Fishing</option>
+                        <option value="sos">SOS Battles</option>
+                        <option value="radar">Poké Radar</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label for="shinyCharm">
+                        <input type="checkbox" id="shinyCharm" name="shinyCharm">
+                        Shiny Charm
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label for="ovalCharm">
+                        <input type="checkbox" id="ovalCharm" name="ovalCharm">
+                        Oval Charm
+                    </label>
+                </div>
                 
-                <label for="ovalCharm">Oval Charm:</label>
-                <input type="checkbox" id="ovalCharm" name="ovalCharm">
+                <div class="form-group">
+                    <label for="resets">Current Encounters:</label>
+                    <input type="number" id="resets" name="resets" min="0" value="0" required>
+                </div>
                 
-                <label for="target">Hunt Target:</label>
-                <input type="text" id="target" name="target" required>
-                
-                <label for="resets">Resets:</label>
-                <input type="number" id="resets" name="resets" value="0" required>
-                
-                <button type="button" id="calculateButton">Calculate</button>
+                <button type="button" id="calculateButton">Calculate Odds</button>
             </form>
-            <div id="results">
-                <p id="probability">Probability: </p>
-                <p id="resetsNeeded">Resets needed for 90% probability: </p>
+            
+            <div id="results" class="results-container">
+                <div class="result-box">
+                    <h3>Current Probability</h3>
+                    <p id="currentProbability">-</p>
+                </div>
+                <div class="result-box">
+                    <h3>Encounters for 90%</h3>
+                    <p id="encountersFor90">-</p>
+                </div>
+                <div class="result-box">
+                    <h3>Base Odds</h3>
+                    <p id="baseOdds">-</p>
+                </div>
             </div>
-            <button id="incrementResets">Increment Resets</button>
         </section>
     </main>
-    <script src="scripts.js"></script>
     <script src="calculator.js"></script>
 </body>
 </html>
