@@ -1,15 +1,17 @@
 const CACHE_NAME = 'shiny-hunting-cache-v3';
 const POKEMON_CACHE = 'pokemon-data-cache-v1';
 const SPRITE_CACHE = 'pokemon-sprite-cache-v1';
-const PLACEHOLDER_URL = '/assets/images/shiny-placeholder.png';
+const PLACEHOLDER_URL = './assets/images/shiny-placeholder.png';
 
 // Basic assets to cache
 const urlsToCache = [
     './',
     './index.html',
+    './search.html',
     './styles.css',
     './scripts.js',
-    './assets/images/shiny-placeholder.png'
+    './Manifest/manifest.webmanifest',
+    './Manifest/shinyhisui.png'
 ];
 
 // Generate sprite URLs for all Pokemon (up to Gen 9)
