@@ -8,13 +8,13 @@
   "theme_color": "#4a90e2",
   "icons": [
     {
-      "src": "https://kliondas.github.io/Manifest/icon-192x192.png",
+      "src": "Manifest/shinyhisui.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://kliondas.github.io/Manifest/icon-512x512.png",
+      "src": "Manifest/shinyhisui.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -22,5 +22,5 @@
   ],
   "categories": ["games", "utilities"],
   "orientation": "any",
-  "scope": "https://kliondas.github.io/"
+  "scope": "/"
 }

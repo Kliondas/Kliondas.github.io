@@ -6,9 +6,31 @@ const SHINY_RATES = {
 const METHOD_MULTIPLIERS = {
     random: 1,
     masuda: 6,
+    masudaCharm: 8,
+    luckyCharm: 2.5, 
     chain: 2.5,
+    chainMax: 41,
     sos: 4,
-    radar: 8
+    sosMax: 13,
+    radar: 8,
+    radarMax: 40,
+    friendSafari: 5.46,
+    dexNav: 6,
+    dynamaxAdventure: 100,
+    massOutbreak: 25,
+    massiveOutbreak: 12.8,
+    outbreakChain: 32.8,
+    letsGoCatch: 4,      
+    letsGoMaxCatch: 11,  
+    letsGoLure: 1.5,     
+    bdspRadar: 4,        
+    bdspRadarMax: 41,    
+    legends: 1,// Base rate is different for Legends Arceus
+    sandwich60: 6,       
+    sandwich100: 10,     
+    sandwich200: 20,     
+    outbreakSV: 4,
+    outbreakSVCharm: 6  
 };
 
 function getBaseRate(game) {
@@ -20,13 +42,15 @@ function getBaseRate(game) {
 
 function calculateShinyProbability(game, method, shinyCharm, resets) {
     const baseRate = getBaseRate(game);
-    const methodMultiplier = METHOD_MULTIPLIERS[method] || 1;
+    let methodMultiplier = METHOD_MULTIPLIERS[method] || 1;
     const charmMultiplier = shinyCharm ? 3 : 1;
+
+    // Lucky Charm specific calculation
+    if (method === 'luckyCharm') {
+        return (1 - Math.pow(1 - (baseRate * methodMultiplier), resets)) * 100;
+    }
     
-    const encounterRate = baseRate * methodMultiplier * charmMultiplier;
-    const probability = 1 - Math.pow(1 - encounterRate, resets);
-    
-    return probability * 100;
+    return (1 - Math.pow(1 - (baseRate * methodMultiplier * charmMultiplier), resets)) * 100;
 }
 
 function calculateResetsFor90Percent(game, method, shinyCharm) {
@@ -65,6 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `${resetsNeeded.toLocaleString()} encounters`;
         document.getElementById('baseOdds').textContent = 
             `1 in ${(1/baseRate).toLocaleString()}`;
+        
+        const huntRate = 1 / (baseRate * methodMultiplier * charmMultiplier);
+        document.getElementById('huntOdds').textContent = 
+            `Hunt odds: 1 in ${Math.round(huntRate).toLocaleString()}`;
     });
     
     // Update available methods based on game selection
@@ -76,17 +104,71 @@ document.addEventListener('DOMContentLoaded', () => {
         methodSelect.innerHTML = '<option value="random">Random Encounter</option>';
         
         // Add game-specific methods
-        if (['sunMoon', 'ultraSunMoon'].includes(game)) {
-            methodSelect.innerHTML += '<option value="sos">SOS Battles</option>';
-        }
-        if (['diamondPearl', 'platinum'].includes(game)) {
-            methodSelect.innerHTML += '<option value="radar">Poké Radar</option>';
-        }
-        if (game !== 'goldSilver' && game !== 'crystal') {
-            methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
-        }
-        if (['xY', 'orasAlpha'].includes(game)) {
-            methodSelect.innerHTML += '<option value="chain">Chain Fishing</option>';
+        switch(game) {
+            // Gen 4
+            case 'diamondPearl':
+            case 'platinum':
+                methodSelect.innerHTML += '<option value="radar">Poké Radar</option>';
+                methodSelect.innerHTML += '<option value="radarMax">Poké Radar (40 Chain)</option>';
+                break;
+            // Gen 5
+            case 'blackWhite':
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                break;
+            case 'black2White2':
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                methodSelect.innerHTML += '<option value="luckyCharm">Lucky Charm</option>';
+                break;
+            // Gen 6
+            case 'xY':
+                methodSelect.innerHTML += '<option value="chain">Chain Fishing</option>';
+                methodSelect.innerHTML += '<option value="chainMax">Chain Fishing (41+)</option>';
+                methodSelect.innerHTML += '<option value="friendSafari">Friend Safari</option>';
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                methodSelect.innerHTML += '<option value="masudaCharm">Masuda Method + Charm</option>';
+                break;
+            // Gen 7
+            case 'sunMoon':
+            case 'ultraSunMoon':
+                methodSelect.innerHTML += '<option value="sos">SOS Battles</option>';
+                methodSelect.innerHTML += '<option value="sosMax">SOS Battles (31+)</option>';
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                methodSelect.innerHTML += '<option value="masudaCharm">Masuda Method + Charm</option>';
+                break;
+            // Gen 7 Let's Go
+            case 'letsGo':
+                methodSelect.innerHTML += '<option value="letsGoLure">Lure</option>';
+                methodSelect.innerHTML += '<option value="letsGoCatch">Catch Combo (31+)</option>';
+                methodSelect.innerHTML += '<option value="letsGoMaxCatch">Catch Combo (31+) + Lure</option>';
+                break;
+            // Gen 8
+            case 'swordShield':
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                methodSelect.innerHTML += '<option value="masudaCharm">Masuda Method + Charm</option>';
+                methodSelect.innerHTML += '<option value="dynamaxAdventure">Dynamax Adventure</option>';
+                break;
+            case 'bdsp':
+                methodSelect.innerHTML += '<option value="bdspRadar">Poké Radar</option>';
+                methodSelect.innerHTML += '<option value="bdspRadarMax">Poké Radar (40 Chain)</option>';
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                methodSelect.innerHTML += '<option value="masudaCharm">Masuda Method + Charm</option>';
+                break;
+            // Gen 8 Legends
+            case 'legendsArceus':
+                methodSelect.innerHTML += '<option value="massOutbreak">Mass Outbreak</option>';
+                methodSelect.innerHTML += '<option value="massiveOutbreak">Massive Mass Outbreak</option>';
+                methodSelect.innerHTML += '<option value="outbreakChain">Perfect Research</option>';
+                break;
+            // Gen 9
+            case 'scarletViolet':
+                methodSelect.innerHTML += '<option value="sandwich60">Sparkling Power Lv. 1</option>';
+                methodSelect.innerHTML += '<option value="sandwich100">Sparkling Power Lv. 2</option>';
+                methodSelect.innerHTML += '<option value="sandwich200">Sparkling Power Lv. 3</option>';
+                methodSelect.innerHTML += '<option value="outbreakSV">Mass Outbreak</option>';
+                methodSelect.innerHTML += '<option value="outbreakSVCharm">Mass Outbreak + Charm</option>';
+                methodSelect.innerHTML += '<option value="masuda">Masuda Method</option>';
+                methodSelect.innerHTML += '<option value="masudaCharm">Masuda Method + Charm</option>';
+                break;
         }
     });
 });

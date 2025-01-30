@@ -172,7 +172,6 @@ function recommendMethod() {
     alert('Empfohlene Methode wird hier angezeigt.');
 }
 
-// Add this at the end of your existing script.js file
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('selectAllGames')?.addEventListener('click', () => {
         document.querySelectorAll('.game input[name]:not([name$="ShinyCharm"]):not([name$="OvalCharm"])')
@@ -220,7 +219,6 @@ function determineHuntingMethod(pokemonName, game, hasShinyCharm) {
     };
 }
 
-// Add this code at the end of scripts.js
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
         for(let registration of registrations) {
@@ -229,7 +227,6 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-// Add to existing code
 let pokemonCache = new Map();
 
 async function searchPokemon(searchTerm) {
