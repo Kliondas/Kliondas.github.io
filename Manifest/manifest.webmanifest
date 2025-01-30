@@ -8,7 +8,7 @@
   "theme_color": "#4a90e2",
   "icons": [
     {
-      "src": "./shinyhisui.png",
+      "src": "./hisuishiny192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"

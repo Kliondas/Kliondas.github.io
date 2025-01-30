@@ -6,7 +6,7 @@
     <title>PWA Shiny Hunting</title>
     <link rel="manifest" href="Manifest/manifest.webmanifest">
     <link rel="icon" type="image/png" href="Manifest/icon-192x192.png">
-    <link rel="apple-touch-icon" href="Manifest/icon-192x192.png">
+    <link rel="apple-touch-icon" href="Manifest/hisuishiny192x192.png">
     <meta name="theme-color" content="#4a90e2">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -310,7 +310,9 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', async () => {
                 try {
-                    const registration = await navigator.serviceWorker.register('./sw.js');
+                    const registration = await navigator.serviceWorker.register('/sw.js', {
+                        scope: '/'
+                    });
                     console.log('ServiceWorker registration successful');
                 } catch (err) {
                     console.log('ServiceWorker registration failed: ', err);

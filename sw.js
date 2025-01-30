@@ -1,17 +1,19 @@
-const CACHE_NAME = 'shiny-hunting-cache-v3';
+const CACHE_NAME = 'shiny-hunting-cache-v4';
 const POKEMON_CACHE = 'pokemon-data-cache-v1';
 const SPRITE_CACHE = 'pokemon-sprite-cache-v1';
 const PLACEHOLDER_URL = './assets/images/shiny-placeholder.png';
 
 // Basic assets to cache
 const urlsToCache = [
-    './',
-    './index.html',
-    './search.html',
-    './styles.css',
-    './scripts.js',
-    './Manifest/manifest.webmanifest',
-    './Manifest/shinyhisui.png'
+    '/',
+    '/index.html',
+    '/search.html',
+    '/styles.css',
+    '/scripts.js',
+    '/calculator.js',
+    '/calculator.html',
+    '/Manifest/manifest.webmanifest',
+    '/Manifest/shinyhisui.png'
 ];
 
 // Generate sprite URLs for all Pokemon (up to Gen 9)
@@ -29,7 +31,7 @@ const generateSpriteUrls = () => {
 self.addEventListener('install', event => {
     event.waitUntil(
         Promise.all([
-            caches.open(CACHE_NAME),
+            caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)),
             caches.open(POKEMON_CACHE),
             caches.open(SPRITE_CACHE),
             initPokemonCache()
@@ -90,12 +92,25 @@ async function initPokemonCache() {
 // Update fetch handler
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then(response => {
-            if (response) {
-                return response;
-            }
-            return fetch(event.request);
-        })
+        caches.match(event.request)
+            .then(response => {
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request).then(
+                    response => {
+                        if(!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+                        const responseToCache = response.clone();
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+                                cache.put(event.request, responseToCache);
+                            });
+                        return response;
+                    }
+                );
+            })
     );
 });
 
