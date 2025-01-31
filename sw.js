@@ -5,15 +5,16 @@ const PLACEHOLDER_URL = './assets/images/shiny-placeholder.png';
 
 // Basic assets to cache
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/search.html',
-    '/styles.css',
-    '/scripts.js',
-    '/calculator.js',
-    '/calculator.html',
-    '/Manifest/manifest.webmanifest',
-    '/Manifest/shinyhisui.png'
+    './',
+    './index.html',
+    './search.html',
+    './styles.css',
+    './scripts.js',
+    './calculator.js',
+    './calculator.html',
+    './Manifest/manifest.webmanifest',
+    './Manifest/shinyhisui.png',
+    './Manifest/hisuishiny192x192.png'
 ];
 
 // Generate sprite URLs for all Pokemon (up to Gen 9)
