@@ -17,20 +17,23 @@ const METHOD_MULTIPLIERS = {
     friendSafari: 5.46,
     dexNav: 6,
     dynamaxAdventure: 100,
-    massOutbreak: 25,
-    massiveOutbreak: 12.8,
+    massOutbreak: 25,         
+    massiveOutbreak: 12.8,     
     outbreakChain: 32.8,
     letsGoCatch: 4,      
     letsGoMaxCatch: 11,  
     letsGoLure: 1.5,     
     bdspRadar: 4,        
     bdspRadarMax: 41,    
-    legends: 1,// Base rate is different for Legends Arceus
+    legends: 1,
     sandwich60: 6,       
     sandwich100: 10,     
     sandwich200: 20,     
     outbreakSV: 4,
-    outbreakSVCharm: 6  
+    outbreakSVCharm: 6,
+    researchLevel10: 2,        
+    perfectResearch: 4,        
+    outbreakPerfect: 32.8      
 };
 
 function getBaseRate(game) {
@@ -157,7 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'legendsArceus':
                 methodSelect.innerHTML += '<option value="massOutbreak">Mass Outbreak</option>';
                 methodSelect.innerHTML += '<option value="massiveOutbreak">Massive Mass Outbreak</option>';
-                methodSelect.innerHTML += '<option value="outbreakChain">Perfect Research</option>';
+                methodSelect.innerHTML += '<option value="researchLevel10">Research Level 10</option>';
+                methodSelect.innerHTML += '<option value="perfectResearch">Perfect Research</option>';
+                methodSelect.innerHTML += '<option value="outbreakPerfect">Mass Outbreak + Perfect Research</option>';
                 break;
             // Gen 9
             case 'scarletViolet':
