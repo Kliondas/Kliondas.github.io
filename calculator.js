@@ -91,11 +91,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('encountersFor90').textContent = 
             `${resetsNeeded.toLocaleString()} encounters`;
         document.getElementById('baseOdds').textContent = 
-            `1 in ${(1/baseRate).toLocaleString()}`;
+            `1 in ${Math.round(1/baseRate).toLocaleString()}`;
         
         const huntRate = 1 / (baseRate * methodMultiplier * charmMultiplier);
         document.getElementById('huntOdds').textContent = 
-            `Hunt odds: 1 in ${Math.round(huntRate).toLocaleString()}`;
+            `1 in ${Math.round(huntRate).toLocaleString()}`;
     });
     
     // Update available methods based on game selection
