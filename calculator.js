@@ -82,9 +82,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        const baseRate = getBaseRate(game);
+        const methodMultiplier = METHOD_MULTIPLIERS[method] || 1;
+        const charmMultiplier = shinyCharm ? 3 : 1;
+        
         const currentProbability = calculateShinyProbability(game, method, shinyCharm, resets);
         const resetsNeeded = calculateResetsFor90Percent(game, method, shinyCharm);
-        const baseRate = getBaseRate(game);
+        
+        // Calculate and display hunt odds
+        const huntRate = 1 / (baseRate * methodMultiplier * charmMultiplier);
+        
+        console.log('Debug values:', {
+            baseRate,
+            methodMultiplier,
+            charmMultiplier,
+            huntRate
+        });
         
         document.getElementById('currentProbability').textContent = 
             `${currentProbability.toFixed(2)}%`;
@@ -92,8 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `${resetsNeeded.toLocaleString()} encounters`;
         document.getElementById('baseOdds').textContent = 
             `1 in ${Math.round(1/baseRate).toLocaleString()}`;
-        
-        const huntRate = 1 / (baseRate * methodMultiplier * charmMultiplier);
         document.getElementById('huntOdds').textContent = 
             `1 in ${Math.round(huntRate).toLocaleString()}`;
     });
